@@ -14,8 +14,8 @@ const navItems = [
 ];
 
 const toolsItems = [
-  { label: '🥗 Meal Planner', href: '/planner', desc: 'Custom pet meal plans' },
-  { label: '🦴 Anatomy', href: '/anatomy', desc: 'Explore pet anatomy' },
+  { label: 'More Feature 1', href: '/feature1', desc: 'feat1 description' },
+  { label: 'More Feature 2', href: '/feature2', desc: 'feat2 description' },
   { label: '❓ FAQs', href: '/help', desc: 'Common questions answered' },
 ];
 
@@ -49,11 +49,10 @@ export default function SiteHeader() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'border-b border-slate-200/60 bg-white/80 shadow-sm backdrop-blur-md'
-          : 'border-b border-slate-200 bg-white'
-      }`}
+      className={`sticky top-0 z-50 transition-all duration-300 ${scrolled
+        ? 'border-b border-slate-200/60 bg-white/80 shadow-sm backdrop-blur-md'
+        : 'border-b border-slate-200 bg-white'
+        }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5 sm:px-8">
         {/* Logo */}
@@ -98,9 +97,8 @@ export default function SiteHeader() {
 
             {/* Dropdown panel */}
             <div
-              className={`absolute left-0 top-full mt-2 w-52 origin-top-left rounded-2xl border border-slate-200/80 bg-white p-2 shadow-xl shadow-slate-900/10 transition-all duration-200 ${
-                toolsOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'
-              }`}
+              className={`absolute left-0 top-full mt-2 w-52 origin-top-left rounded-2xl border border-slate-200/80 bg-white p-2 shadow-xl shadow-slate-900/10 transition-all duration-200 ${toolsOpen ? 'scale-100 opacity-100' : 'pointer-events-none scale-95 opacity-0'
+                }`}
             >
               {toolsItems.map((item) => (
                 <a
@@ -166,9 +164,8 @@ export default function SiteHeader() {
 
       {/* Mobile menu */}
       <div
-        className={`overflow-hidden transition-all duration-300 md:hidden ${
-          menuOpen ? 'max-h-[600px] border-t border-slate-200' : 'max-h-0'
-        }`}
+        className={`overflow-hidden transition-all duration-300 md:hidden ${menuOpen ? 'max-h-[600px] border-t border-slate-200' : 'max-h-0'
+          }`}
       >
         <nav className="flex flex-col gap-1 bg-white px-5 pb-4 pt-2">
           {navItems.map((item) => (

@@ -115,8 +115,8 @@ const footerLinks = {
   ],
   Resources: [
     { label: 'Chat / AI', href: '/chat' },
-    { label: 'Planner', href: '/planner' },
-    { label: 'Anatomy', href: '/anatomy' },
+    { label: 'Feature 1', href: '/feature1' },
+    { label: 'Feature 2', href: '/feature2' },
     { label: 'Help', href: '/help' },
   ],
   Legal: [
