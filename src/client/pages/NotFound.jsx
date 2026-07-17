@@ -1,6 +1,5 @@
-import React from "react";
-import { Container, Card, CardContent, Typography, Box } from "@mui/material";
 import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import { Box, Card, CardContent, Container, Typography } from "@mui/material";
 import AppHeroIcon from "../components/AppHeroIcon";
 
 const NotFound = () => {

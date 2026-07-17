@@ -149,11 +149,10 @@ function ChatWindow({ messages, onMessagesChange }) {
                     <span className="text-sm">🤖</span>
                   </div>
                 )}
-                <div className={`max-w-[65%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
-                  m.role === 'user'
+                <div className={`max-w-[65%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${m.role === 'user'
                     ? 'bg-teal-600 text-white rounded-tr-sm'
                     : 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm'
-                }`}>
+                  }`}>
                   <p className="whitespace-pre-wrap">{m.content}</p>
                 </div>
                 {m.role === 'user' && (
@@ -286,9 +285,8 @@ export default function ChatPage() {
               <div
                 key={s.id}
                 onClick={() => handleSelectSession(s)}
-                className={`group flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 cursor-pointer transition-colors ${
-                  s.id === activeId ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-slate-50'
-                }`}
+                className={`group flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 cursor-pointer transition-colors ${s.id === activeId ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-slate-50'
+                  }`}
               >
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="text-base flex-shrink-0">💬</span>

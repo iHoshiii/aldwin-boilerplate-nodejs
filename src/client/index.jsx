@@ -43,7 +43,6 @@ if (root !== null) {
       <AppProvider>
         <BrowserRouter>
           {/* Global scroll-reveal observer — fires once on mount */}
-          <RevealObserver />
 
           {/* Site-wide header (Vetify design) */}
           <SiteHeader />

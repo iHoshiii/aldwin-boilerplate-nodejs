@@ -1,11 +1,25 @@
-import { ContactPage, Group } from "@mui/icons-material";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, Button, Card, Container, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import AppLoading from "../components/AppLoading";
-import { useContacts } from "../hooks";
+import { ContactPage, Group } from '@mui/icons-material';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import DeleteIcon from '@mui/icons-material/Delete';
+import {
+  Box,
+  Button,
+  Card,
+  Container,
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import AppLoading from '../components/AppLoading';
+import { useContacts } from '../hooks';
 
 const Contacts = () => {
   const { contacts, isLoading, deleteContact } = useContacts();
@@ -40,12 +54,19 @@ const Contacts = () => {
         <Box>
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={4}>
             <Box display="flex" alignItems="center">
-              <ContactPage sx={{ fontSize: 32, color: "primary.main", mr: 2 }} />
+              <ContactPage sx={{ fontSize: 32, color: 'primary.main', mr: 2 }} />
               <Typography variant="h4" component="h1" fontWeight="medium">
                 Contacts
               </Typography>
             </Box>
-            <Button variant="contained" color="primary" component={Link} to="/new-contact" startIcon={<AddCircleOutlineIcon />} sx={{ borderRadius: 2, px: 3, py: 1 }}>
+            <Button
+              variant="contained"
+              color="primary"
+              component={Link}
+              to="/new-contact"
+              startIcon={<AddCircleOutlineIcon />}
+              sx={{ borderRadius: 2, px: 3, py: 1 }}
+            >
               New Contact
             </Button>
           </Box>
@@ -53,13 +74,13 @@ const Contacts = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: "bold" }} width={80}>
+                  <TableCell sx={{ fontWeight: 'bold' }} width={80}>
                     ID
                   </TableCell>
-                  <TableCell sx={{ fontWeight: "bold" }}>First Name</TableCell>
-                  <TableCell sx={{ fontWeight: "bold" }}>Last Name</TableCell>
-                  <TableCell sx={{ fontWeight: "bold" }}>Email</TableCell>
-                  <TableCell sx={{ fontWeight: "bold" }} width={120}>
+                  <TableCell sx={{ fontWeight: 'bold' }}>First Name</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Last Name</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Email</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }} width={120}>
                     Actions
                   </TableCell>
                 </TableRow>
@@ -72,10 +93,19 @@ const Contacts = () => {
                     <TableCell>{contact.lastName}</TableCell>
                     <TableCell>{contact.email}</TableCell>
                     <TableCell>
-                      <IconButton component={Link} to={`/contact/${contact.id}`} color="primary" size="small">
+                      <IconButton
+                        component={Link}
+                        to={`/contact/${contact.id}`}
+                        color="primary"
+                        size="small"
+                      >
                         <VisibilityIcon />
                       </IconButton>
-                      <IconButton onClick={() => handleDeleteContact(contact.id)} color="error" size="small">
+                      <IconButton
+                        onClick={() => handleDeleteContact(contact.id)}
+                        color="error"
+                        size="small"
+                      >
                         <DeleteIcon />
                       </IconButton>
                     </TableCell>
@@ -98,4 +128,3 @@ const Contacts = () => {
 };
 
 export default Contacts;
-

@@ -1,9 +1,9 @@
 // vite.config.js
-import react from "@vitejs/plugin-react";
-import { config } from "dotenv";
-import path from "path";
-import { fileURLToPath } from "url";
-import { defineConfig } from "vite";
+import react from '@vitejs/plugin-react';
+import { config } from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { defineConfig } from 'vite';
 
 config();
 
@@ -17,11 +17,11 @@ export default defineConfig({
     postcss: './postcss.config.cjs',
   },
   optimizeDeps: {
-    include: ["react", "react-dom"],
+    include: ['react', 'react-dom'],
   },
   build: {
-    outDir: path.resolve(__dirname, "dist"),
-    assetsDir: "",
+    outDir: path.resolve(__dirname, 'dist'),
+    assetsDir: '',
     emptyOutDir: true,
     sourcemap: true,
   },
@@ -30,8 +30,8 @@ export default defineConfig({
     open: true,
     strictPort: true,
     proxy: {
-      "/api": `http://localhost:${process.env.PORT || 8081}`,
-      "/auth": `http://localhost:${process.env.PORT || 8081}`,
+      '/api': `http://localhost:${process.env.PORT || 8081}`,
+      '/auth': `http://localhost:${process.env.PORT || 8081}`,
     },
   },
   preview: {
@@ -39,7 +39,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": "/src",
+      '@': '/src',
     },
   },
 });

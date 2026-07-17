@@ -1,5 +1,4 @@
-import React from "react";
-import { Toolbar, Box } from "@mui/material";
+import { Box, Toolbar } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
