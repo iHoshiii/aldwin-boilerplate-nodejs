@@ -26,16 +26,16 @@ export default defineConfig({
     sourcemap: true,
   },
   server: {
-    port: 3000,
+    port: 3001,
     open: true,
     strictPort: true,
     proxy: {
-      "/api": `http://localhost:${process.env.PORT || 8080}`,
-      "/auth": `http://localhost:${process.env.PORT || 8080}`,
+      "/api": `http://localhost:${process.env.PORT || 8081}`,
+      "/auth": `http://localhost:${process.env.PORT || 8081}`,
     },
   },
   preview: {
-    port: 3000,
+    port: 3001,
   },
   resolve: {
     alias: {

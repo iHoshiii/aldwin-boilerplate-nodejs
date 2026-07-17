@@ -54,7 +54,7 @@ const config = {
    * Server port
    * Default: 8080
    */
-  port: parseInt(getEnv("PORT", "8080"), 10),
+  port: parseInt(getEnv("PORT", "8081"), 10),
 
   /**
    * Node environment

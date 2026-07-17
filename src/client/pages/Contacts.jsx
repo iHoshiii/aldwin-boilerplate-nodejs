@@ -1,13 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Box, Button, Container, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Card } from "@mui/material";
+import { ContactPage, Group } from "@mui/icons-material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import DeleteIcon from "@mui/icons-material/Delete";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import CallToAction from "../components/CallToAction";
-import ConfirmationDialog from "../components/ConfirmationDialog";
+import { Box, Button, Card, Container, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import AppLoading from "../components/AppLoading";
-import { ContactPage, Group } from "@mui/icons-material";
 import { useContacts } from "../hooks";
 
 const Contacts = () => {

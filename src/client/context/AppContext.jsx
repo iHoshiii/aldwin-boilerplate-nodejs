@@ -21,7 +21,7 @@
  *   </AppProvider>
  */
 
-import { createContext, useContext, useState, useMemo, useCallback } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 
 /**
  * Default context values
@@ -117,5 +117,8 @@ export function AppProvider({ children }) {
         </AppContext.Provider>
     );
 }
+
+// Export named `AppContext` for barrel re-exports
+export { AppContext };
 
 export default AppContext;

@@ -13,22 +13,19 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Global CSS — Tailwind + all Vetify animation classes
+// Global CSS — Tailwind
 import './app.css';
 
 // Context
 import { AppProvider } from './context';
 
 // Layout shell
-import RevealObserver from './components/RevealObserver';
 import SiteHeader from './components/SiteHeader';
 
 // Pages — Vetify shells
-import Anatomy from './pages/Anatomy';
 import Chat from './pages/Chat';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Planner from './pages/Planner';
 
 // Pages — original boilerplate (MUI-based, kept intact)
 import ContactDetail from './pages/ContactDetail';
@@ -55,8 +52,6 @@ if (root !== null) {
             {/* ── Vetify-shell pages ─────────────────────── */}
             <Route path="/" element={<Home />} />
             <Route path="/chat" element={<Chat />} />
-            <Route path="/anatomy" element={<Anatomy />} />
-            <Route path="/planner" element={<Planner />} />
             <Route path="/login" element={<Login />} />
 
             {/* ── Original boilerplate pages (MUI) ──────── */}
