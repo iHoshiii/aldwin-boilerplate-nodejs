@@ -27,7 +27,7 @@ export interface AppConfig {
 const nodeEnv = getEnv('NODE_ENV', 'development');
 
 const config: AppConfig = {
-  port: parseInt(getEnv('PORT', '8081'), 10),
+  port: parseInt(getEnv('PORT', '8080'), 10),
   nodeEnv,
   isDevelopment: nodeEnv === 'development',
   isProduction: nodeEnv === 'production',
