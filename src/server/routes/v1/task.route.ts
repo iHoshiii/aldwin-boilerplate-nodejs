@@ -1,9 +1,15 @@
+import type { Request, Response } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
 import { Router } from 'express';
 import * as taskService from '../../services/task.service.js';
 import { errorResponse, successResponse } from '../../utils/response.js';
 
 const router = Router();
+
+const getParamAsNumber = (param: string | string[] | undefined): number => {
+  const str = typeof param === 'string' ? param : param?.[0];
+  return parseInt(str || '0', 10);
+};
 
 // Validation schemas
 const createTaskSchema = {
@@ -37,15 +43,15 @@ const taskIdSchema = {
 };
 
 // Routes
-router.get('/list', async (req, res) => {
+router.get('/list', async (req: Request, res: Response) => {
   try {
     const { status, priority, assigneeId, projectId } = req.query;
-    const filters = {};
+    const filters: any = {};
     
     if (status) filters.status = status;
     if (priority) filters.priority = priority;
-    if (assigneeId) filters.assigneeId = parseInt(assigneeId);
-    if (projectId) filters.projectId = parseInt(projectId);
+    if (assigneeId) filters.assigneeId = getParamAsNumber(assigneeId as string | string[]);
+    if (projectId) filters.projectId = getParamAsNumber(projectId as string | string[]);
 
     const tasks = await taskService.findAll(filters);
     res.json(successResponse(tasks, 'Tasks retrieved successfully'));
@@ -55,9 +61,9 @@ router.get('/list', async (req, res) => {
   }
 });
 
-router.get('/:id', celebrate(taskIdSchema), async (req, res) => {
+router.get('/:id', celebrate(taskIdSchema), async (req: Request, res: Response) => {
   try {
-    const task = await taskService.findById(parseInt(req.params.id));
+    const task = await taskService.findById(getParamAsNumber(req.params.id));
     if (!task) {
       return res.status(404).json(errorResponse('Task not found'));
     }
@@ -68,7 +74,7 @@ router.get('/:id', celebrate(taskIdSchema), async (req, res) => {
   }
 });
 
-router.post('/', celebrate(createTaskSchema), async (req, res) => {
+router.post('/', celebrate(createTaskSchema), async (req: Request, res: Response) => {
   try {
     const task = await taskService.create(req.body);
     res.status(201).json(successResponse(task, 'Task created successfully'));
@@ -79,7 +85,7 @@ router.post('/', celebrate(createTaskSchema), async (req, res) => {
 });
 
 // Alias: some clients POST to /create (legacy path kept for backward compat)
-router.post('/create', celebrate(createTaskSchema), async (req, res) => {
+router.post('/create', celebrate(createTaskSchema), async (req: Request, res: Response) => {
   try {
     const task = await taskService.create(req.body);
     res.status(201).json(successResponse(task, 'Task created successfully'));
@@ -89,9 +95,9 @@ router.post('/create', celebrate(createTaskSchema), async (req, res) => {
   }
 });
 
-router.put('/:id', celebrate({ ...taskIdSchema, ...updateTaskSchema }), async (req, res) => {
+router.put('/:id', celebrate({ ...taskIdSchema, ...updateTaskSchema }), async (req: Request, res: Response) => {
   try {
-    const task = await taskService.update(parseInt(req.params.id), req.body);
+    const task = await taskService.update(getParamAsNumber(req.params.id), req.body);
     if (!task) {
       return res.status(404).json(errorResponse('Task not found'));
     }
@@ -102,9 +108,9 @@ router.put('/:id', celebrate({ ...taskIdSchema, ...updateTaskSchema }), async (r
   }
 });
 
-router.delete('/:id', celebrate(taskIdSchema), async (req, res) => {
+router.delete('/:id', celebrate(taskIdSchema), async (req: Request, res: Response) => {
   try {
-    const deleted = await taskService.remove(parseInt(req.params.id));
+    const deleted = await taskService.remove(getParamAsNumber(req.params.id));
     if (!deleted) {
       return res.status(404).json(errorResponse('Task not found'));
     }
@@ -123,9 +129,9 @@ router.patch('/:id/status', celebrate({
   [Segments.BODY]: Joi.object({
     status: Joi.string().valid('TODO', 'IN_PROGRESS', 'REVIEW', 'DONE').required(),
   }),
-}), async (req, res) => {
+}), async (req: Request, res: Response) => {
   try {
-    const task = await taskService.updateStatus(parseInt(req.params.id), req.body.status);
+    const task = await taskService.updateStatus(getParamAsNumber(req.params.id), req.body.status);
     if (!task) {
       return res.status(404).json(errorResponse('Task not found'));
     }

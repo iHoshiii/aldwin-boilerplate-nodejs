@@ -119,11 +119,11 @@ export const remove = async (id: number): Promise<boolean> => {
   }
 };
 
-export const updateStatus = async (id: number, status: TaskStatus) => {
+export const updateStatus = async (id: number, status: string) => {
   try {
     return await db.prisma.task.update({
       where: { id },
-      data: { status },
+      data: { status: status as TaskStatus },
       include: {
         assignee: {
           select: {
