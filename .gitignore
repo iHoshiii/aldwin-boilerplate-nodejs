@@ -53,6 +53,9 @@ web_modules/
 *.tsbuildinfo
 tsconfig.tsbuildinfo
 
+# Compiled server output (tsc)
+build/server/
+
 # Optional npm cache directory
 .npm
 

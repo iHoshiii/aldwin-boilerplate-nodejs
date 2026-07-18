@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src/server",
+    "outDir": "build/server",
+    "noEmit": false,
+    "allowJs": true,
+    "checkJs": false,
+    "declaration": false,
+    "sourceMap": true
+  },
+  "include": ["src/server/**/*"],
+  "exclude": ["**/*.test.ts", "**/*.spec.ts"]
+}
