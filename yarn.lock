@@ -960,8 +960,10 @@
 "@tsparticles/plugin-rgb-color@4.3.2":
   version "4.3.2"
 
-"@tsparticles/react@^4.2.1":
+"@tsparticles/react@^4.3.2":
   version "4.3.2"
+  resolved "https://registry.npmjs.org/@tsparticles/react/-/react-4.3.2.tgz"
+  integrity sha512-aCTqFkGBnT1BitrlmyjkR+FNQ+RKuO8UfhadLfW51YSHwTdR0erB1ZFab+wCout1SWGIR7mirRWfjwewxiDMeA==
 
 "@tsparticles/shape-circle@4.3.2":
   version "4.3.2"
@@ -986,8 +988,10 @@
 "@tsparticles/shape-star@4.3.2":
   version "4.3.2"
 
-"@tsparticles/slim@^4.2.1":
+"@tsparticles/slim@^4.3.2":
   version "4.3.2"
+  resolved "https://registry.npmjs.org/@tsparticles/slim/-/slim-4.3.2.tgz"
+  integrity sha512-VDCC1xod/Ak9Pn+OD/5AT6y3ccPR3n+EHQBZJKin81yYE/+POfNZ+tDSg/cMmrNBW6MFobKVJpp2kO0AoYFvrw==
   dependencies:
     "@tsparticles/basic" "4.3.2"
     "@tsparticles/engine" "4.3.2"

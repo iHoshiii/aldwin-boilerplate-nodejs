@@ -1,11 +1,4 @@
-/**
- * Home — Landing page shell ported from Vetify.
- * All copy/data is generic; replace with your own project content.
- * FloatingBones uses @tsparticles — install deps before enabling.
- */
 import ScrollReveal from '../components/ScrollReveal';
-// import FloatingBones from '../components/FloatingBones'; // uncomment after installing @tsparticles
-
 /* ─── Data — replace with your own ────────────────────────── */
 const features = [
   {
@@ -129,7 +122,6 @@ const footerLinks = {
 export default function Home() {
   return (
     <main className="min-h-screen bg-[#f6fbfb] text-slate-950">
-
       {/* ══ HERO ══════════════════════════════════════════════ */}
       <section
         id="home"
@@ -218,7 +210,9 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="grid items-center gap-14 lg:grid-cols-2">
             <ScrollReveal variant="reveal-left">
-              <p className="text-sm font-bold uppercase tracking-[0.22em] text-teal-700">About this project</p>
+              <p className="text-sm font-bold uppercase tracking-[0.22em] text-teal-700">
+                About this project
+              </p>
               <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
                 Built for developers,
                 <br className="hidden sm:block" /> by developers.
@@ -251,10 +245,30 @@ export default function Home() {
             <ScrollReveal variant="reveal-right">
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { value: '0', label: 'Users', bg: 'from-teal-500 to-teal-700', shadow: 'shadow-teal-500/20' },
-                  { value: '0', label: 'Projects', bg: 'from-blue-500 to-blue-700', shadow: 'shadow-blue-500/20' },
-                  { value: '0', label: 'API calls', bg: 'from-indigo-500 to-indigo-700', shadow: 'shadow-indigo-500/20' },
-                  { value: '0', label: 'Uptime', bg: 'from-emerald-500 to-emerald-700', shadow: 'shadow-emerald-500/20' },
+                  {
+                    value: '0',
+                    label: 'Users',
+                    bg: 'from-teal-500 to-teal-700',
+                    shadow: 'shadow-teal-500/20',
+                  },
+                  {
+                    value: '0',
+                    label: 'Projects',
+                    bg: 'from-blue-500 to-blue-700',
+                    shadow: 'shadow-blue-500/20',
+                  },
+                  {
+                    value: '0',
+                    label: 'API calls',
+                    bg: 'from-indigo-500 to-indigo-700',
+                    shadow: 'shadow-indigo-500/20',
+                  },
+                  {
+                    value: '0',
+                    label: 'Uptime',
+                    bg: 'from-emerald-500 to-emerald-700',
+                    shadow: 'shadow-emerald-500/20',
+                  },
                 ].map((stat) => (
                   <div
                     key={stat.label}
@@ -274,7 +288,9 @@ export default function Home() {
       <section id="how-it-works" className="bg-white py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <ScrollReveal variant="reveal" className="mb-14 text-center">
-            <p className="text-sm font-bold uppercase tracking-[0.22em] text-teal-700">Simple process</p>
+            <p className="text-sm font-bold uppercase tracking-[0.22em] text-teal-700">
+              Simple process
+            </p>
             <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
               How it works
             </h2>
@@ -313,7 +329,9 @@ export default function Home() {
         />
         <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
           <ScrollReveal variant="reveal" className="mb-14 text-center">
-            <p className="text-sm font-bold uppercase tracking-[0.22em] text-teal-700">More to explore</p>
+            <p className="text-sm font-bold uppercase tracking-[0.22em] text-teal-700">
+              More to explore
+            </p>
             <h2 className="mt-3 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl lg:text-5xl">
               Everything in one place
             </h2>
@@ -333,13 +351,21 @@ export default function Home() {
                   >
                     {f.icon}
                   </div>
-                  <h3 className={`text-xl font-bold text-slate-950 transition-colors duration-200 ${f.hover}`}>
+                  <h3
+                    className={`text-xl font-bold text-slate-950 transition-colors duration-200 ${f.hover}`}
+                  >
                     {f.title}
                   </h3>
                   <p className="mt-3 flex-1 leading-relaxed text-slate-600">{f.description}</p>
                   <div className="mt-6 flex items-center gap-1 text-sm font-semibold text-teal-700 transition-all duration-300 group-hover:gap-2">
                     Explore
-                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1">
+                    <svg
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                    >
                       <path d="M3 8h10M9 4l4 4-4 4" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </div>
@@ -353,8 +379,14 @@ export default function Home() {
       {/* ══ CTA BANNER ════════════════════════════════════════ */}
       <ScrollReveal variant="reveal">
         <section className="relative overflow-hidden bg-slate-950 px-5 py-16 sm:px-8 sm:py-20">
-          <div aria-hidden className="pointer-events-none absolute -left-32 -top-32 h-80 w-80 rounded-full bg-teal-500/20 blur-[80px]" />
-          <div aria-hidden className="pointer-events-none absolute -bottom-32 -right-32 h-80 w-80 rounded-full bg-blue-500/20 blur-[80px]" />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -left-32 -top-32 h-80 w-80 rounded-full bg-teal-500/20 blur-[80px]"
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -bottom-32 -right-32 h-80 w-80 rounded-full bg-blue-500/20 blur-[80px]"
+          />
           <div className="relative mx-auto flex max-w-7xl flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.22em] text-teal-400">
