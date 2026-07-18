@@ -1,4 +1,4 @@
-import type { Prisma } from '@prisma/client';
+import type { Prisma, TaskStatus } from '@prisma/client';
 import db from './database.js';
 
 type PrismaError = Error & { code?: string };
@@ -119,7 +119,7 @@ export const remove = async (id: number): Promise<boolean> => {
   }
 };
 
-export const updateStatus = async (id: number, status: string) => {
+export const updateStatus = async (id: number, status: TaskStatus) => {
   try {
     return await db.prisma.task.update({
       where: { id },

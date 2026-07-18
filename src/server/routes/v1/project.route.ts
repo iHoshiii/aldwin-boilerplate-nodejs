@@ -56,9 +56,14 @@ router.get('/list', async (req: Request, res: Response) => {
   }
 });
 
+const getParamAsNumber = (param: string | string[] | undefined): number => {
+  const str = typeof param === 'string' ? param : param?.[0];
+  return parseInt(str || '0', 10);
+};
+
 router.get('/:id', celebrate(projectIdSchema), async (req: Request, res: Response) => {
   try {
-    const project = await projectService.findById(parseInt(req.params.id, 10));
+    const project = await projectService.findById(getParamAsNumber(req.params.id));
     if (!project) {
       return res.status(404).json(errorResponse('Project not found'));
     }
@@ -94,7 +99,7 @@ router.put(
   celebrate({ ...projectIdSchema, ...updateProjectSchema }),
   async (req: Request, res: Response) => {
     try {
-      const project = await projectService.update(parseInt(req.params.id, 10), req.body);
+      const project = await projectService.update(getParamAsNumber(req.params.id), req.body);
       if (!project) {
         return res.status(404).json(errorResponse('Project not found'));
       }
@@ -108,7 +113,7 @@ router.put(
 
 router.delete('/:id', celebrate(projectIdSchema), async (req: Request, res: Response) => {
   try {
-    const deleted = await projectService.remove(parseInt(req.params.id, 10));
+    const deleted = await projectService.remove(getParamAsNumber(req.params.id));
     if (!deleted) {
       return res.status(404).json(errorResponse('Project not found'));
     }
@@ -124,7 +129,7 @@ router.post(
   celebrate({ ...projectIdSchema, ...addMemberSchema }),
   async (req: Request, res: Response) => {
     try {
-      const member = await projectService.addMember(parseInt(req.params.id, 10), req.body);
+      const member = await projectService.addMember(getParamAsNumber(req.params.id), req.body);
       res.status(201).json(successResponse(member, 'Member added to project successfully'));
     } catch (error) {
       console.error('Error adding member to project:', error);
@@ -139,7 +144,7 @@ router.post(
 
 router.get('/:id/members', celebrate(projectIdSchema), async (req: Request, res: Response) => {
   try {
-    const members = await projectService.getMembers(parseInt(req.params.id, 10));
+    const members = await projectService.getMembers(getParamAsNumber(req.params.id));
     res.json(successResponse(members, 'Project members retrieved successfully'));
   } catch (error) {
     console.error('Error fetching project members:', error);
@@ -158,8 +163,8 @@ router.delete(
   async (req: Request, res: Response) => {
     try {
       const removed = await projectService.removeMember(
-        parseInt(req.params.id, 10),
-        parseInt(req.params.contactId, 10)
+        getParamAsNumber(req.params.id),
+        getParamAsNumber(req.params.contactId)
       );
       if (!removed) {
         return res.status(404).json(errorResponse('Member not found in project'));

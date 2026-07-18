@@ -9,7 +9,7 @@ const { Pool } = pg;
 
 class Database {
   static instance: Database | undefined;
-  prisma: PrismaClient;
+  prisma!: PrismaClient;
 
   constructor() {
     if (Database.instance) {

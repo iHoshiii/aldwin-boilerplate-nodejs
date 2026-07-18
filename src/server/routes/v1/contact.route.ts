@@ -1,8 +1,8 @@
-import type { NextFunction, Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import express from 'express';
 import { contactValidation } from '../../middleware/validate.js';
-import { successResponse, errorResponse } from '../../utils/response.js';
 import contactService from '../../services/contact.service.js';
+import { errorResponse, successResponse } from '../../utils/response.js';
 
 const router = express.Router();
 
@@ -18,9 +18,10 @@ router.get('/list', async (_req: Request, res: Response) => {
 
 router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
+  const contactId = typeof id === 'string' ? id : id[0];
 
   try {
-    const contact = await contactService.findById(id);
+    const contact = await contactService.findById(contactId);
 
     if (!contact) {
       return res.status(404).json(errorResponse('Contact not found'));
@@ -48,9 +49,10 @@ router.post('/', contactValidation.create, async (req: Request, res: Response) =
 router.put('/:id', contactValidation.update, async (req: Request, res: Response) => {
   const { id } = req.params;
   const { firstName, lastName, email } = req.body;
+  const contactId = typeof id === 'string' ? id : id[0];
 
   try {
-    const contact = await contactService.update(Number(id), { firstName, lastName, email });
+    const contact = await contactService.update(Number(contactId), { firstName, lastName, email });
     res.status(200).json(successResponse(contact));
   } catch (err) {
     console.error(err);
@@ -60,9 +62,10 @@ router.put('/:id', contactValidation.update, async (req: Request, res: Response)
 
 router.delete('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
+  const contactId = typeof id === 'string' ? id : id[0];
 
   try {
-    const contact = await contactService.delete(Number(id));
+    const contact = await contactService.delete(Number(contactId));
     res.status(200).json(successResponse(contact));
   } catch (err) {
     console.error(err);
