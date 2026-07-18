@@ -1,4 +1,4 @@
-import { ContactPage, Group } from '@mui/icons-material';
+import { ContactPage, Group, Visibility as VisibilityIcon } from '@mui/icons-material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {
@@ -6,6 +6,11 @@ import {
   Button,
   Card,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   IconButton,
   Paper,
   Table,
@@ -41,14 +46,24 @@ const Contacts = () => {
       {isLoading ? (
         <AppLoading />
       ) : contacts.length === 0 ? (
-        <Card elevation={2} sx={{ borderRadius: 2, py: 8 }}>
-          <CallToAction
-            heroIcon={Group}
-            title="Welcome!"
-            subtitle="Let's get started. To add a new contact, click on the button below."
-            url="/new-contact"
-            buttonName="Add Contact"
-          />
+        <Card elevation={2} sx={{ borderRadius: 2, py: 8, textAlign: 'center' }}>
+          <Group sx={{ fontSize: 64, color: 'primary.main', mb: 2 }} />
+          <Typography variant="h4" mb={2}>
+            Welcome!
+          </Typography>
+          <Typography variant="body1" color="text.secondary" mb={4}>
+            Let&apos;s get started. To add a new contact, click on the button below.
+          </Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            to="/new-contact"
+            startIcon={<AddCircleOutlineIcon />}
+            sx={{ borderRadius: 2, px: 3, py: 1 }}
+          >
+            Add Contact
+          </Button>
         </Card>
       ) : (
         <Box>
@@ -116,13 +131,20 @@ const Contacts = () => {
           </TableContainer>
         </Box>
       )}
-      <ConfirmationDialog
-        open={deleteDialogOpen}
-        onClose={() => setDeleteDialogOpen(false)}
-        onConfirm={confirmDeleteContact}
-        title="Confirm Delete"
-        message="Are you sure you want to delete this contact? This action cannot be undone."
-      />
+      <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
+        <DialogTitle>Confirm Delete</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this contact? This action cannot be undone.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteDialogOpen(false)}>Cancel</Button>
+          <Button onClick={confirmDeleteContact} color="error" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 };

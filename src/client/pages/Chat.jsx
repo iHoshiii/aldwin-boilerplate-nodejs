@@ -50,8 +50,8 @@ const SUGGESTIONS = [
   'Help me understand the project structure.',
 ];
 
-/* ─── ChatWindow (inner component) ─────────────────────────── */
-function ChatWindow({ messages, onMessagesChange }) {
+/* ─── Chat Window (inner component) ─────────────────────────── */
+function ChatWindow({ messages, onMessagesChange, onUpdateSession }) {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
@@ -61,8 +61,6 @@ function ChatWindow({ messages, onMessagesChange }) {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
-
-  const lastUserIndex = messages.reduce((last, m, i) => (m.role === 'user' ? i : last), -1);
 
   const sendMessage = async (text, replaceFromIndex) => {
     const content = (text ?? input).trim();
@@ -89,13 +87,23 @@ function ChatWindow({ messages, onMessagesChange }) {
         signal: controller.signal,
       });
       const data = await res.json();
-      onMessagesChange([...updated, { role: 'assistant', content: data.reply || data.message || 'No response.' }]);
+      const finalMessages = [
+        ...updated,
+        { role: 'assistant', content: data.reply || data.message || 'No response.' },
+      ];
+      onMessagesChange(finalMessages);
+      onUpdateSession(finalMessages);
     } catch (err) {
       if (err?.name === 'AbortError') {
         onMessagesChange(base);
         setInput(content);
       } else {
-        onMessagesChange([...updated, { role: 'assistant', content: 'Sorry, something went wrong. Please try again.' }]);
+        const finalMessages = [
+          ...updated,
+          { role: 'assistant', content: 'Sorry, something went wrong. Please try again.' },
+        ];
+        onMessagesChange(finalMessages);
+        onUpdateSession(finalMessages);
       }
     } finally {
       abortRef.current = null;
@@ -143,16 +151,22 @@ function ChatWindow({ messages, onMessagesChange }) {
         ) : (
           <>
             {messages.map((m, i) => (
-              <div key={i} className={`flex gap-3 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              <div
+                key={i}
+                className={`flex gap-3 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
                 {m.role === 'assistant' && (
                   <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-teal-500 to-teal-700 shadow-sm mt-1">
                     <span className="text-sm">🤖</span>
                   </div>
                 )}
-                <div className={`max-w-[65%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${m.role === 'user'
-                    ? 'bg-teal-600 text-white rounded-tr-sm'
-                    : 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm'
-                  }`}>
+                <div
+                  className={`max-w-[65%] rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
+                    m.role === 'user'
+                      ? 'bg-teal-600 text-white rounded-tr-sm'
+                      : 'bg-white border border-slate-200 text-slate-700 rounded-tl-sm'
+                  }`}
+                >
                   <p className="whitespace-pre-wrap">{m.content}</p>
                 </div>
                 {m.role === 'user' && (
@@ -210,7 +224,13 @@ function ChatWindow({ messages, onMessagesChange }) {
                 disabled={!input.trim()}
                 className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-teal-600 text-white transition-all hover:bg-teal-700 disabled:opacity-40 disabled:cursor-not-allowed"
               >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 rotate-90">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="h-4 w-4 rotate-90"
+                >
                   <path d="M12 19V5M5 12l7-7 7 7" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </button>
@@ -227,22 +247,30 @@ function ChatWindow({ messages, onMessagesChange }) {
 
 /* ─── Chat Page ─────────────────────────────────────────────── */
 export default function ChatPage() {
-  const [sessions, setSessions] = useState([]);
-  const [activeId, setActiveId] = useState('');
+  // Initialize with localStorage data on first render
+  const [sessions, setSessions] = useState(() => loadSessions());
+  const [activeId, setActiveId] = useState(() => newSessionId());
   const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    const stored = loadSessions();
-    setSessions(stored);
-    setActiveId(newSessionId());
-  }, []);
-
-  useEffect(() => {
-    if (!activeId || messages.length === 0) return;
-    const session = { id: activeId, title: deriveTitle(messages), messages, updatedAt: Date.now() };
+  const updateSession = (newMessages) => {
+    const session = {
+      id: activeId,
+      title: deriveTitle(newMessages),
+      messages: newMessages,
+      updatedAt: Date.now(),
+    };
     saveSession(session);
-    setSessions(loadSessions());
-  }, [messages, activeId]);
+    setSessions((prevSessions) => {
+      const newSessions = [...prevSessions];
+      const idx = newSessions.findIndex((s) => s.id === session.id);
+      if (idx >= 0) {
+        newSessions[idx] = session;
+      } else {
+        newSessions.unshift(session);
+      }
+      return newSessions.slice(0, 50);
+    });
+  };
 
   const handleNewChat = () => {
     setActiveId(newSessionId());
@@ -257,7 +285,7 @@ export default function ChatPage() {
   const handleDeleteSession = (e, id) => {
     e.stopPropagation();
     deleteSession(id);
-    setSessions(loadSessions());
+    setSessions((prevSessions) => prevSessions.filter((s) => s.id !== id));
     if (id === activeId) handleNewChat();
   };
 
@@ -270,14 +298,22 @@ export default function ChatPage() {
             onClick={handleNewChat}
             className="w-full flex items-center justify-center gap-2 rounded-xl border border-teal-500 bg-teal-50 px-4 py-2 text-sm font-semibold text-teal-700 hover:bg-teal-100 transition-colors"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className="h-4 w-4"
+            >
               <path d="M12 5v14M5 12h14" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             New Chat
           </button>
         </div>
         <div className="flex-1 overflow-y-auto p-3 space-y-1">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400 px-2 mb-2">Recent</p>
+          <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400 px-2 mb-2">
+            Recent
+          </p>
           {sessions.length === 0 ? (
             <p className="text-xs text-slate-400 px-2">No recent chats yet.</p>
           ) : (
@@ -285,8 +321,11 @@ export default function ChatPage() {
               <div
                 key={s.id}
                 onClick={() => handleSelectSession(s)}
-                className={`group flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 cursor-pointer transition-colors ${s.id === activeId ? 'bg-teal-50 text-teal-700' : 'text-slate-600 hover:bg-slate-50'
-                  }`}
+                className={`group flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 cursor-pointer transition-colors ${
+                  s.id === activeId
+                    ? 'bg-teal-50 text-teal-700'
+                    : 'text-slate-600 hover:bg-slate-50'
+                }`}
               >
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="text-base flex-shrink-0">💬</span>
@@ -296,7 +335,13 @@ export default function ChatPage() {
                   onClick={(e) => handleDeleteSession(e, s.id)}
                   className="flex-shrink-0 opacity-0 group-hover:opacity-100 text-slate-400 hover:text-red-500 transition-all"
                 >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-3.5 w-3.5">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="h-3.5 w-3.5"
+                  >
                     <path d="M6 18L18 6M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </button>
@@ -308,7 +353,11 @@ export default function ChatPage() {
 
       {/* Chat area */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <ChatWindow messages={messages} onMessagesChange={setMessages} />
+        <ChatWindow
+          messages={messages}
+          onMessagesChange={setMessages}
+          onUpdateSession={updateSession}
+        />
       </div>
     </main>
   );

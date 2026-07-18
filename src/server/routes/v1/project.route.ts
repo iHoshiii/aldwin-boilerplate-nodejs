@@ -1,5 +1,5 @@
-import type { NextFunction, Request, Response } from 'express';
 import { celebrate, Joi, Segments } from 'celebrate';
+import type { Request, Response } from 'express';
 import { Router } from 'express';
 import * as projectService from '../../services/project.service.js';
 import { errorResponse, successResponse } from '../../utils/response.js';

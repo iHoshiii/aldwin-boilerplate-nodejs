@@ -15,15 +15,15 @@
  *   npm start            # Production
  */
 
-import path from 'path';
-import express from 'express';
-import cors from 'cors';
-import http from 'http';
-import type { Request, Response, NextFunction } from 'express';
 import { errors } from 'celebrate';
-import routes from './routes/v1/index.js';
-import { securityMiddleware, requestLogger } from './middleware/security.js';
+import cors from 'cors';
+import type { NextFunction, Request, Response } from 'express';
+import express from 'express';
+import http from 'http';
+import path from 'path';
 import config from './config/index.js';
+import { requestLogger, securityMiddleware } from './middleware/security.js';
+import routes from './routes/v1/index.js';
 
 // ============================================================================
 // Express App Setup
@@ -91,16 +91,15 @@ app.get('/*splat', (req: Request, res: Response) => {
  * Global error handler
  * Catches any unhandled errors and returns a consistent JSON response
  */
-app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
+app.use((err: unknown, req: Request, res: Response, _next: NextFunction) => {
+  const error = err as { status?: number; message?: string; stack?: string };
   console.error('Unhandled error:', err);
 
-  res.status(err.status || 500).json({
+  res.status(error.status || 500).json({
     success: false,
-    message: config.isDevelopment
-      ? err.message
-      : 'An unexpected error occurred',
+    message: config.isDevelopment ? error.message : 'An unexpected error occurred',
     // Only include stack trace in development
-    ...(config.isDevelopment && { stack: err.stack }),
+    ...(config.isDevelopment && { stack: error.stack }),
   });
 });
 
