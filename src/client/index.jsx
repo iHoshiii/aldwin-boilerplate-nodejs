@@ -1,7 +1,7 @@
 /**
  * App Entry Point
  * ================
- * Layout: SiteHeader (Vetify shell) + RevealObserver + page routes
+ * Layout: SiteHeader + RevealObserver + page routes
  * Styling: Tailwind CSS (app.css) — MUI ThemeProvider removed;
  *          MUI components still work standalone in legacy pages
  *          (Contacts, Tasks, Projects) — they carry their own theme.
@@ -22,7 +22,7 @@ import { AppProvider } from './context';
 // Layout shell
 import SiteHeader from './components/SiteHeader';
 
-// Pages — Vetify shells
+// Pages
 import Chat from './pages/Chat';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -44,11 +44,11 @@ if (root !== null) {
         <BrowserRouter>
           {/* Global scroll-reveal observer — fires once on mount */}
 
-          {/* Site-wide header (Vetify design) */}
+          {/* Site-wide header */}
           <SiteHeader />
 
           <Routes>
-            {/* ── Vetify-shell pages ─────────────────────── */}
+            {/* ── Pages ─────────────────────── */}
             <Route path="/" element={<Home />} />
             <Route path="/chat" element={<Chat />} />
             <Route path="/login" element={<Login />} />

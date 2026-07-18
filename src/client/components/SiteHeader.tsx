@@ -1,6 +1,6 @@
 /**
  * SiteHeader
- * Ported from Vetify — next-auth replaced with a simple isAuthenticated prop/context hook.
+ * next-auth replaced with a simple isAuthenticated prop/context hook.
  */
 import { useEffect, useRef, useState } from 'react';
 

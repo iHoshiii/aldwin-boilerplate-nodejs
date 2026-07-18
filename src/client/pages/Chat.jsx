@@ -1,5 +1,5 @@
 /**
- * Chat — AI chat interface shell ported from Vetify.
+ * Chat — AI chat interface shell.
  * Decoupled from FastAPI. Messages are sent to /api/v1/chat on the
  * Express backend. Wire up src/server/routes/v1/index.js with a
  * POST /chat endpoint that calls your AI provider.
