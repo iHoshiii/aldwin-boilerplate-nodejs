@@ -15,10 +15,6 @@ export interface AppConfig {
   database: {
     url: string;
   };
-  security: {
-    rateLimitWindowMs: number;
-    rateLimitMax: number;
-  };
   cors: {
     origin: string;
   };
@@ -34,10 +30,6 @@ const config: AppConfig = {
   isTest: nodeEnv === 'test',
   database: {
     url: getEnv('DATABASE_URL'),
-  },
-  security: {
-    rateLimitWindowMs: 15 * 60 * 1000,
-    rateLimitMax: 100,
   },
   cors: {
     origin: getEnv('CORS_ORIGIN', '*'),

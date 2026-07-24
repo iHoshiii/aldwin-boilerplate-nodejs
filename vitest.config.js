@@ -18,37 +18,37 @@
  *   npm run test:coverage  # Generate coverage report
  */
 
-import react from "@vitejs/plugin-react";
-import path from "path";
-import { defineConfig } from "vitest/config";
+import react from '@vitejs/plugin-react';
+import path from 'path';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [react()],
 
   test: {
     // Use jsdom for DOM testing (React components)
-    environment: "jsdom",
+    environment: 'jsdom',
 
     // Make test globals available (describe, it, expect, etc.)
     globals: true,
 
     // Setup file to run before each test file
-    setupFiles: ["./src/client/__tests__/setup.js"],
+    setupFiles: ['./src/client/__tests__/setup.js'],
 
     // Include patterns for test files — JS/JSX and TS/TSX (TypeScript support added)
-    include: ["src/**/*.{test,spec}.{js,jsx,ts,tsx}"],
+    include: ['src/**/*.{test,spec}.{js,jsx,ts,tsx}'],
 
     // Exclude patterns
-    exclude: ["node_modules", "dist"],
+    exclude: ['node_modules', 'dist'],
 
     // Coverage configuration
     coverage: {
-      reporter: ["text", "json", "html", "cobertura"],
+      reporter: ['text', 'json', 'html', 'cobertura'],
       exclude: [
-        "node_modules/",
-        "src/**/__tests__/**",
-        "src/**/*.test.{js,jsx,ts,tsx}",
-        "src/**/*.spec.{js,jsx,ts,tsx}",
+        'node_modules/',
+        'src/**/__tests__/**',
+        'src/**/*.test.{js,jsx,ts,tsx}',
+        'src/**/*.spec.{js,jsx,ts,tsx}',
       ],
     },
   },
@@ -56,7 +56,7 @@ export default defineConfig({
   // Path aliases (same as vite.config.js)
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      '@': path.resolve(__dirname, './src'),
     },
   },
 });
